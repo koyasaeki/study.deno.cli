@@ -1,23 +1,19 @@
-import {
-  Command,
-  EnumType,
-} from "https://deno.land/x/cliffy@v0.25.5/command/mod.ts";
-
-const logLevelType = new EnumType(["debug", "info", "warn", "error"]);
+import { Command } from "https://deno.land/x/cliffy@v0.25.5/command/mod.ts";
 
 await new Command()
   .name("cliffy")
   .version("0.1.0")
   .description("Command line framework for Deno")
-  .type("log-level", logLevelType)
-  .env("DEBUG=<enable:boolean>", "Enable debug output.")
-  .option("-d, --debug", "Enable debug output.")
-  .option("-l, --log-level <level:log-level>", "Set log level.", {
-    default: "info" as const,
-  })
+  .globalOption("-d, --debug", "Enable debug output.")
+  .action((_options, ..._args) => console.log("Main command called"))
+  // Child command 1.
+  .command("foo", "Foo sub-command/")
+  .option("-f, --foo", "Foo option.")
+  .arguments("<value:string>")
+  .action((_options, ...__args) => console.log("Foo command called."))
+  // Child command 2.
+  .command("bar", "Bar sub-command.")
+  .option("-b, --bar", "Bar option.")
   .arguments("<input:string> [output:string]")
-  .action((options, ...args) => {
-    console.log(options);
-    console.log(args);
-  })
+  .action((_options, ..._args) => console.log("Bar command called."))
   .parse(Deno.args);
