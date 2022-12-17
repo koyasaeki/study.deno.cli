@@ -4,6 +4,7 @@ await new Command()
   .name("cliffy")
   .version("0.1.0")
   .description("Command line framework for Deno")
+  .usage("[options] [script] [script options]")
   .globalOption("-d, --debug", "Enable debug output.")
   .action((_options, ..._args) => console.log("Main command called"))
   // Child command 1.
