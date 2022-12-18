@@ -1,6 +1,6 @@
 import { Command } from "https://deno.land/x/cliffy@v0.25.5/command/mod.ts";
 
-const { args } = await new Command()
+const { args, options } = await new Command()
   .name("cliffy")
   .version("0.1.0")
   .description("Command line framework for Deno")
@@ -20,6 +20,10 @@ const { args } = await new Command()
   // Child command 3.
   .command("remove", "Remove directories.")
   .arguments("<dirs...>")
+  // Child command 4.
+  .command("option", "Option sample command.")
+  .option("-f, --file <path:string>", "Force option.")
   .parse(Deno.args);
 
 console.log(args);
+console.log(options);
