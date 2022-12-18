@@ -17,6 +17,9 @@ const { args } = await new Command()
   .option("-b, --bar", "Bar option.")
   .arguments("<input:string> [output:string]")
   .action((_options, ..._args) => console.log("Bar command called."))
+  // Child command 3.
+  .command("remove", "Remove directories.")
+  .arguments("<dirs...>")
   .parse(Deno.args);
 
 console.log(args);
